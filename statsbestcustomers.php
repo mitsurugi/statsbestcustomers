@@ -68,6 +68,18 @@ class StatsBestCustomers extends ModuleGrid
 				'align' => 'center'
 			),
 			array(
+				'id' => 'company',
+				'header' => $this->l('Company'),
+				'dataIndex' => 'company',
+				'align' => 'center'
+			),
+			array(
+				'id' => 'department',
+				'header' => $this->l('Job position'),
+				'dataIndex' => 'department',
+				'align' => 'center'
+			),
+			array(
 				'id' => 'email',
 				'header' => $this->l('Email'),
 				'dataIndex' => 'email',
