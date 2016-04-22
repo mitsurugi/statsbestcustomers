@@ -159,7 +159,7 @@ class StatsBestCustomers extends ModuleGrid
 	public function getData()
 	{
 		$this->query = '
-		SELECT SQL_CALC_FOUND_ROWS c.`id_customer`, c.`lastname`, c.`firstname`, c.`email`,
+		SELECT SQL_CALC_FOUND_ROWS c.`id_customer`, c.`lastname`, c.`firstname`, c.`company`, dpt.`name` department, c.`email`,
 			COUNT(co.`id_connections`) as totalVisits,
 			IFNULL((
 				SELECT ROUND(SUM(IFNULL(op.`amount`, 0) / cu.conversion_rate), 2)
@@ -180,6 +180,8 @@ class StatsBestCustomers extends ModuleGrid
 		FROM `'._DB_PREFIX_.'customer` c
 		LEFT JOIN `'._DB_PREFIX_.'guest` g ON c.`id_customer` = g.`id_customer`
 		LEFT JOIN `'._DB_PREFIX_.'connections` co ON g.`id_guest` = co.`id_guest`
+		JOIN `'._DB_PREFIX_.'address` a ON c.`id_customer` = a.`id_customer`
+		JOIN override_address_fields_values dpt ON dpt.id = a.department AND dpt.id_field = 1 AND dpt.id_lang=4
 		WHERE co.date_add BETWEEN '.$this->getDate()
 			.Shop::addSqlRestriction(Shop::SHARE_CUSTOMER, 'c').
 			'GROUP BY c.`id_customer`, c.`lastname`, c.`firstname`, c.`email`';
